@@ -5,6 +5,11 @@ import prisma from "../lib/prisma";
 const ALLOWED_SORT_FIELDS = ["scheduledDate", "priority", "createdAt", "updatedAt"] as const;
 type SortableField = (typeof ALLOWED_SORT_FIELDS)[number];
 
+// Priority is stored as a plain string, so a DB-level sort would order it
+// alphabetically (HIGH, LOW, MEDIUM) instead of by actual urgency. This rank
+// map lets us sort by real priority order (LOW < MEDIUM < HIGH) in memory.
+const PRIORITY_RANK: Record<string, number> = { LOW: 1, MEDIUM: 2, HIGH: 3 };
+
 // POST /api/todos
 export const createTodo = async (req: Request, res: Response) => {
   try {
