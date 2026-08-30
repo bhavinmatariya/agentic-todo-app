@@ -1,5 +1,4 @@
 export default function Home() {
-  // hero-marker-test
   return (
     <>
       <header className="w-full border-b border-gray-200">
