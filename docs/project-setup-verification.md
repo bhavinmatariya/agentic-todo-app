@@ -179,7 +179,10 @@ are flagged here for visibility ahead of future feature work.
    `npm start`).
 6. This verification was performed via static code review only; build and
    runtime behavior were not empirically executed/confirmed as part of
-   this audit.
+   this audit. Consistent with this, a `frontend/` build attempted
+   without first running `npm install` fails with `sh: 1: next: not
+   found` — an expected consequence of missing dependencies rather than
+   a defect introduced by this documentation-only change.
 
 ## Recommendations
 
