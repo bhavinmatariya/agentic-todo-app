@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <>
-      <header className="w-full border-b border-gray-200" data-test="x">
+      <header className="w-full border-b border-gray-200">
         <nav className="flex flex-col items-center justify-between gap-4 p-6 sm:flex-row sm:gap-0 sm:px-12">
           <span className="text-2xl font-bold text-blue-600">Todo App</span>
           <ul className="flex flex-col items-center gap-4 sm:flex-row sm:gap-8">
