@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import TodoForm from "@/components/TodoForm";
+import { deleteTodo, getTodos, toggleTodoStatus } from "@/lib/api";
 import type { Priority, Todo, TodoStatus } from "@/types/todo";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 type StatusFilter = "ALL" | TodoStatus;
 type SortField = "scheduledDate" | "priority" | "createdAt" | "updatedAt";
