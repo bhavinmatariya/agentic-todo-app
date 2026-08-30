@@ -33,7 +33,7 @@ export default function Home() {
         </p>
         <a
           href="#"
-          className="mt-4 rounded-full bg-blue-600 px-8 py-3 text-lg font-semibold text-white shadow-sm transition-colors hover:bg-blue-700 sm:px-10 sm:py-4 sm:text-xl"
+          className="mt-4 rounded-full bg-blue-600 px-8 py-3 text-lg font-semibold text-white shadow-sm transition-colors hover:bg-blue-700 sm:px-10 sm:py-4 sm:text-xl md:px-12 md:py-5 md:text-2xl lg:px-14 lg:py-6"
         >
           Get Started
         </a>
