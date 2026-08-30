@@ -58,6 +58,23 @@ Copy `.env.example` to `.env` and adjust values as needed:
 cp .env.example .env
 ```
 
+`DATABASE_URL` must point to a running PostgreSQL instance, for example:
+
+```text
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/todo_app?schema=public"
+```
+
+### Database Setup
+
+The backend uses [Prisma](https://www.prisma.io/) as its ORM, with a PostgreSQL `users` table storing id, name, email, password hash, and timestamps.
+
+Generate the Prisma client and run the migrations against your database:
+
+```bash
+npx prisma generate
+npx prisma migrate dev
+```
+
 ### Run the development server
 
 ```bash
