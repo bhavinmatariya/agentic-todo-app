@@ -211,8 +211,8 @@ export default function TodoList() {
                 </div>
               </div>
 
-              <div className="flex flex-col items-end gap-2">
-                <div className="flex items-center gap-2">
+              <div className="flex flex-col items-start gap-2 sm:items-end">
+                <div className="flex flex-wrap items-center gap-2">
                   <span
                     className={`rounded-full px-3 py-1 text-xs font-semibold ${PRIORITY_STYLES[todo.priority]}`}
                   >
@@ -229,7 +229,7 @@ export default function TodoList() {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <button
                     type="button"
                     onClick={() => handleToggle(todo)}
