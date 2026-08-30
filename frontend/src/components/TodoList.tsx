@@ -211,21 +211,47 @@ export default function TodoList() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 sm:flex-col sm:items-end">
-                <span
-                  className={`rounded-full px-3 py-1 text-xs font-semibold ${PRIORITY_STYLES[todo.priority]}`}
-                >
-                  {PRIORITY_LABELS[todo.priority]}
-                </span>
-                <span
-                  className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                    todo.status === "COMPLETED"
-                      ? "bg-blue-100 text-blue-700"
-                      : "bg-gray-100 text-gray-600"
-                  }`}
-                >
-                  {todo.status === "COMPLETED" ? "Completed" : "Pending"}
-                </span>
+              <div className="flex flex-col items-end gap-2">
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`rounded-full px-3 py-1 text-xs font-semibold ${PRIORITY_STYLES[todo.priority]}`}
+                  >
+                    {PRIORITY_LABELS[todo.priority]}
+                  </span>
+                  <span
+                    className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                      todo.status === "COMPLETED"
+                        ? "bg-blue-100 text-blue-700"
+                        : "bg-gray-100 text-gray-600"
+                    }`}
+                  >
+                    {todo.status === "COMPLETED" ? "Completed" : "Pending"}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleToggle(todo)}
+                    className="rounded-md border border-gray-300 px-3 py-1 text-xs font-medium text-gray-600 hover:bg-gray-50"
+                  >
+                    {todo.status === "COMPLETED" ? "Mark pending" : "Mark completed"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleEditClick(todo)}
+                    className="rounded-md border border-gray-300 px-3 py-1 text-xs font-medium text-gray-600 hover:bg-gray-50"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(todo)}
+                    className="rounded-md border border-red-300 px-3 py-1 text-xs font-medium text-red-600 hover:bg-red-50"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </li>
           ))}
