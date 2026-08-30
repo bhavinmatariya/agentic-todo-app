@@ -24,7 +24,7 @@ export default function Home() {
         </nav>
       </header>
       <main className="flex min-h-screen flex-col items-center justify-center gap-6 px-6 py-24 text-center sm:px-12">
-        <h1 data-test className="text-4xl font-bold text-blue-600 sm:text-6xl">
+        <h1 className="text-4xl font-bold text-blue-600 sm:text-6xl">
           Organize Your Life with Todo App
         </h1>
         <p className="max-w-2xl text-lg text-gray-600 sm:text-xl">
