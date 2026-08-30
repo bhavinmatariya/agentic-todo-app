@@ -116,6 +116,15 @@ Legend:
 - CI does not currently run either app's `dev`/`start` script or the
   backend's `/api/health` endpoint, so there is no automated verification
   that the servers boot correctly at runtime, only that they build.
+- **Observed:** attempting `npm run build` in `frontend/` in a fresh
+  checkout (i.e. before `npm install` has populated `node_modules`) fails
+  with `sh: 1: next: not found`, since the `next` CLI is provided by
+  `node_modules/.bin` and is not present until dependencies are
+  installed. This is expected behavior for any Node project prior to
+  `npm install` and is not caused by this documentation-only change; it
+  simply confirms that build/startup success was not empirically
+  re-verified as part of this audit and depends on dependencies having
+  been installed first.
 
 ### TypeScript errors — ⚠️ Partially implemented / needs attention
 
