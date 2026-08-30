@@ -1,14 +1,22 @@
 import bcrypt from "bcrypt";
 
-const SALT_ROUNDS = 10;
+const SALT_ROUNDS = 12;
 
-export async function hashPassword(password: string): Promise<string> {
-  return bcrypt.hash(password, SALT_ROUNDS);
-}
+/**
+ * Hash a plain-text password using bcrypt before persisting it.
+ * The resulting hash is safe to store in the database.
+ */
+export const hashPassword = async (plainPassword: string): Promise<string> => {
+  return bcrypt.hash(plainPassword, SALT_ROUNDS);
+};
 
-export async function verifyPassword(
-  password: string,
-  hash: string
-): Promise<boolean> {
-  return bcrypt.compare(password, hash);
-}
+/**
+ * Compare a plain-text password against a stored bcrypt hash.
+ * Returns true when they match.
+ */
+export const verifyPassword = async (
+  plainPassword: string,
+  passwordHash: string
+): Promise<boolean> => {
+  return bcrypt.compare(plainPassword, passwordHash);
+};
