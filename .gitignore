@@ -8,6 +8,10 @@ out/
 # Backend build output
 dist/
 
+# Prisma SQLite database files
+backend/prisma/*.db
+backend/prisma/*.db-journal
+
 # Environment files
 .env
 .env.local
