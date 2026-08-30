@@ -1,24 +1,32 @@
-import jwt from "jsonwebtoken";
+import jwt, { SignOptions } from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET;
-const JWT_EXPIRES_IN = "7d";
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "7d";
 
-export interface JwtPayload {
+export interface AuthTokenPayload {
   userId: string;
 }
 
-function getSecret(): string {
-  if (!JWT_SECRET) {
+const getJwtSecret = (): string => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
     throw new Error("JWT_SECRET environment variable is not set");
   }
+  return secret;
+};
 
-  return JWT_SECRET;
-}
+/**
+ * Sign a JWT for the given user, used as the auth session token that is
+ * stored in an HTTP-only cookie.
+ */
+export const signToken = (payload: AuthTokenPayload): string => {
+  const options: SignOptions = { expiresIn: JWT_EXPIRES_IN };
+  return jwt.sign(payload, getJwtSecret(), options);
+};
 
-export function signToken(payload: JwtPayload): string {
-  return jwt.sign(payload, getSecret(), { expiresIn: JWT_EXPIRES_IN });
-}
-
-export function verifyToken(token: string): JwtPayload {
-  return jwt.verify(token, getSecret()) as JwtPayload;
-}
+/**
+ * Verify and decode an auth JWT, throwing if it is missing, invalid, or
+ * expired.
+ */
+export const verifyToken = (token: string): AuthTokenPayload => {
+  return jwt.verify(token, getJwtSecret()) as AuthTokenPayload;
+};
