@@ -23,11 +23,20 @@ export default function Home() {
           </ul>
         </nav>
       </header>
-      <main className="flex min-h-screen flex-col items-center justify-center p-24">
-        <h1 className="text-4xl font-bold text-blue-600">Todo App Frontend</h1>
-        <p className="mt-4 text-lg text-gray-600">
-          The Next.js frontend is up and running.
+      <main className="flex min-h-screen flex-col items-center justify-center gap-6 px-6 py-24 text-center sm:px-12">
+        <h1 className="text-4xl font-bold text-blue-600 sm:text-6xl">
+          Organize Your Life with Todo App
+        </h1>
+        <p className="max-w-2xl text-lg text-gray-600 sm:text-xl">
+          A simple and intuitive way to manage your tasks, stay productive,
+          and never miss a deadline again.
         </p>
+        <a
+          href="#"
+          className="mt-4 rounded-full bg-blue-600 px-8 py-3 text-lg font-semibold text-white shadow-sm transition-colors hover:bg-blue-700"
+        >
+          Get Started
+        </a>
       </main>
     </>
   );
