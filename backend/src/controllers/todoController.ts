@@ -54,10 +54,20 @@ export const getTodos = async (req: Request, res: Response) => {
       : "createdAt";
     const sortOrder: Prisma.SortOrder = order === "asc" ? "asc" : "desc";
 
-    const todos = await prisma.todo.findMany({
-      where: where as Prisma.TodoWhereInput,
-      orderBy: { [sortField]: sortOrder } as Prisma.TodoOrderByWithRelationInput,
-    });
+    let todos;
+    if (sortField === "priority") {
+      // Fetch unsorted (DB string sort would be alphabetical) and rank in memory.
+      todos = await prisma.todo.findMany({ where: where as Prisma.TodoWhereInput });
+      todos.sort((a, b) => {
+        const diff = PRIORITY_RANK[a.priority] - PRIORITY_RANK[b.priority];
+        return sortOrder === "asc" ? diff : -diff;
+      });
+    } else {
+      todos = await prisma.todo.findMany({
+        where: where as Prisma.TodoWhereInput,
+        orderBy: { [sortField]: sortOrder } as Prisma.TodoOrderByWithRelationInput,
+      });
+    }
 
     return res.status(200).json({ status: "success", data: todos });
   } catch (error) {
