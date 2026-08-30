@@ -207,18 +207,18 @@ export default function TodoForm({ todo, onSaved, onCancel }: TodoFormProps) {
         </div>
       </div>
 
-      <div className="flex justify-end gap-2">
+      <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
         <button
           type="button"
           onClick={onCancel}
-          className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50"
+          className="w-full rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 sm:w-auto"
         >
           Cancel
         </button>
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-60"
+          className="w-full rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-60 sm:w-auto"
         >
           {isSubmitting ? "Saving..." : isEditMode ? "Save changes" : "Add Todo"}
         </button>
