@@ -12,3 +12,26 @@ export interface Todo {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface CreateTodoInput {
+  title: string;
+  description?: string | null;
+  scheduledDate?: string | null;
+  scheduledTime?: string | null;
+  priority?: Priority;
+  status?: TodoStatus;
+}
+
+export type UpdateTodoInput = Partial<CreateTodoInput>;
+
+export interface ApiSuccessResponse<T> {
+  status: "success";
+  message?: string;
+  data: T;
+}
+
+export interface GetTodosParams {
+  status?: TodoStatus;
+  sortBy?: "scheduledDate" | "priority" | "createdAt" | "updatedAt";
+  order?: "asc" | "desc";
+}
