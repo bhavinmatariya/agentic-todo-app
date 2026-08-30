@@ -35,7 +35,7 @@ export default function Home() {
           href="#"
           className="mt-4 rounded-full bg-blue-600 px-8 py-3 text-lg font-semibold text-white shadow-sm transition-colors hover:bg-blue-700"
         >
-          Get Started
+          Get Started TEST
         </a>
       </main>
     </>
