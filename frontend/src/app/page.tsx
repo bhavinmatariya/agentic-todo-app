@@ -23,7 +23,7 @@ export default function Home() {
           </ul>
         </nav>
       </header>
-      <main className="flex min-h-screen flex-col items-center justify-center gap-6 px-6 py-24 text-center sm:px-12">
+      <main className="flex min-h-screen flex-col items-center justify-center TEST gap-6 px-6 py-24 text-center sm:px-12">
         <h1 className="text-4xl font-bold text-blue-600 sm:text-6xl">
           Organize Your Life with Todo App
         </h1>
