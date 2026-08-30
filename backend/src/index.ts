@@ -2,13 +2,14 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import todoRoutes from "./routes/todoRoutes";
+import { notFoundHandler, errorHandler } from "./middleware/errorHandler";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({ origin: process.env.CORS_ORIGIN || "*" }));
 app.use(express.json());
 
 app.get("/api/health", (_req: Request, res: Response) => {
@@ -16,6 +17,9 @@ app.get("/api/health", (_req: Request, res: Response) => {
 });
 
 app.use("/api/todos", todoRoutes);
+
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Backend server is running on port ${PORT}`);
