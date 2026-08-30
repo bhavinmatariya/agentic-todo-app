@@ -202,7 +202,9 @@ export default function TodoList() {
                   <span>
                     Scheduled:{" "}
                     {todo.scheduledDate
-                      ? new Date(todo.scheduledDate).toLocaleDateString()
+                      ? new Date(todo.scheduledDate).toLocaleDateString(undefined, {
+                          timeZone: "UTC",
+                        })
                       : "—"}
                     {todo.scheduledTime ? ` at ${todo.scheduledTime}` : ""}
                   </span>
