@@ -28,46 +28,78 @@ export default function TodoList() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("ALL");
   const [sortField, setSortField] = useState<SortField>("createdAt");
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
+
+  const fetchTodos = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const data = await getTodos({
+        status: statusFilter === "ALL" ? undefined : statusFilter,
+        sortBy: sortField,
+        order: sortOrder,
+      });
+      setTodos(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load todos");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [statusFilter, sortField, sortOrder]);
 
   useEffect(() => {
-    const controller = new AbortController();
-
-    const fetchTodos = async () => {
-      setIsLoading(true);
-      setError(null);
-
-      try {
-        const params = new URLSearchParams();
-        if (statusFilter !== "ALL") {
-          params.set("status", statusFilter);
-        }
-        params.set("sortBy", sortField);
-        params.set("order", sortOrder);
-
-        const response = await fetch(`${API_URL}/api/todos?${params.toString()}`, {
-          signal: controller.signal,
-        });
-        const body = await response.json();
-
-        if (!response.ok || body.status !== "success") {
-          throw new Error(body.message || "Failed to load todos");
-        }
-
-        setTodos(body.data as Todo[]);
-      } catch (err) {
-        if (err instanceof DOMException && err.name === "AbortError") {
-          return;
-        }
-        setError(err instanceof Error ? err.message : "Failed to load todos");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchTodos();
+  }, [fetchTodos]);
 
-    return () => controller.abort();
-  }, [statusFilter, sortField, sortOrder]);
+  const handleAddClick = () => {
+    setEditingTodo(null);
+    setActionError(null);
+    setIsFormOpen(true);
+  };
+
+  const handleEditClick = (todo: Todo) => {
+    setEditingTodo(todo);
+    setActionError(null);
+    setIsFormOpen(true);
+  };
+
+  const handleFormCancel = () => {
+    setIsFormOpen(false);
+    setEditingTodo(null);
+  };
+
+  const handleFormSaved = () => {
+    setIsFormOpen(false);
+    setEditingTodo(null);
+    fetchTodos();
+  };
+
+  const handleDelete = async (todo: Todo) => {
+    if (typeof window !== "undefined" && !window.confirm(`Delete "${todo.title}"?`)) {
+      return;
+    }
+
+    setActionError(null);
+    try {
+      await deleteTodo(todo.id);
+      fetchTodos();
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : "Failed to delete todo");
+    }
+  };
+
+  const handleToggle = async (todo: Todo) => {
+    setActionError(null);
+    try {
+      const updated = await toggleTodoStatus(todo.id);
+      setTodos((current) => current.map((item) => (item.id === updated.id ? updated : item)));
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : "Failed to update todo status");
+    }
+  };
 
   return (
     <section className="flex flex-col gap-6">
@@ -113,7 +145,25 @@ export default function TodoList() {
             </select>
           </div>
         </div>
+
+        <button
+          type="button"
+          onClick={handleAddClick}
+          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+        >
+          Add Todo
+        </button>
       </div>
+
+      {isFormOpen && (
+        <TodoForm todo={editingTodo} onSaved={handleFormSaved} onCancel={handleFormCancel} />
+      )}
+
+      {actionError && (
+        <p className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-600">
+          {actionError}
+        </p>
+      )}
 
       {isLoading && (
         <p className="rounded-md border border-gray-200 p-6 text-center text-gray-500">
